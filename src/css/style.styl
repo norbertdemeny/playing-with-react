@@ -71,112 +71,13 @@ header.top
     &:first-child
       flex-shrink 1 // take 4x the extra room
       flex-basis 50%
-      transform translateX(50%) rotateY(6deg) translateX(-50%)
     &:nth-child(2)
-      transform translateX(-50%) rotateY(-14deg) translateX(50%)
       border-left 0
       border-right 0
       min-width 300px
     &:last-child
       flex-shrink 1 // take 4x the extra room
       flex-basis 50%
-      transform translateX(-50%) rotateY(10deg) translateX(50%) scale(1.08) translateX(24px)
-
-// Folding Transforms
-// Take off folding when not checked
-input#fold:not(:checked) ~ #main
-  .catch-of-the-day > *
-      transform none
-
-label[for="fold"]
-  position absolute
-  top 1rem
-  left 1rem
-  text-transform uppercase
-  font-size 1.3rem
-  background black
-  color white
-  border 2px solid black
-  cursor pointer
-  padding 0.5rem 1rem
-
-input#fold
-  display none
-  &:checked + label
-    background white
-    color black
-
-ul
-  list-style none
-  margin 0
-  padding 0
-
-ul.order
-  // Default state
-  li
-    border-bottom 1px solid black
-    padding 2rem 0
-    display flex
-    font-size 1.4rem
-    justify-content space-between
-    align-items center
-    &:hover
-      // padding 1rem 0
-      button
-        display inline
-    button
-      border 0
-      display none
-      line-height 1
-      padding 0
-    &.total
-      font-weight 600
-      border-bottom 3px solid black
-      border-top 3px double black
-    &.unavailable
-      text-decoration line-through
-      background lighten(red, 80%)
-    .price
-      font-size 1.2rem
-    span.count
-      position relative
-      overflow hidden
-      float left // only works if it's floated?!
-      span
-        display inline-block
-        // transition all 0.5s
-
-.order-title
-  text-align center
-
-.fish-edit
-  margin-bottom 20px
-  border 2px solid black
-  overflow hidden
-  display flex
-  flex-wrap wrap
-  input, textarea, select
-    width 33.33%
-    padding 10px
-    line-height 1
-    font-size 1.2rem
-    border 0
-    border-bottom 1px solid black
-    border-right 1px solid black
-    appearance none
-    border-radius 0
-    background white
-    &:focus
-      outline 0
-      background lighten(orange, 85%)
-  textarea
-    width 100%
-  input:last-of-type
-    width 100%
-  button
-    width 100%
-    border 0
-
 
 // Menu Styles
 .list-of-fish

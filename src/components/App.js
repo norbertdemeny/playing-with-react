@@ -2,34 +2,34 @@ import React from 'react';
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
-import Fish from './Fish';
+import Pill from './Pill';
 import sampleFishes from '../sample-fishes';
 import base from '../base';
 
 class App extends React.Component {
   constructor() {
     super();
-    this.addFish = this.addFish.bind(this);
-    this.updateFish = this.updateFish.bind(this);
-    this.deleteFish = this.deleteFish.bind(this);
+    this.addPill = this.addPill.bind(this);
+    this.updatePill = this.updatePill.bind(this);
+    this.deletePill = this.deletePill.bind(this);
     this.loadSamples = this.loadSamples.bind(this);
     this.addToOrder = this.addToOrder.bind(this);
     this.removeFromOrder = this.removeFromOrder.bind(this);
     this.state = {
-      fishes: [],
+      pills: [],
       order: [],
     }
   }
 
   componentWillMount() {
-    // this runs right before the <aoo> is rendered
-    this.ref = base.syncState(`${this.props.params.storeId}/fishes`, {
+    // // this runs right before the <aoo> is rendered
+    this.ref = base.syncState(`tno-database/pills`, {
         context: this,
-        state: 'fishes',
+        state: 'pills',
       });
 
     // check if there is any order in localStorage
-    const localStorageRef = localStorage.getItem(`order-${this.props.params.storeId}`);
+    const localStorageRef = localStorage.getItem('order');
     if (localStorageRef) {
       this.setState({
         order: JSON.parse(localStorageRef)
@@ -42,66 +42,85 @@ class App extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-      localStorage.setItem(`order-${this.props.params.storeId}`, JSON.stringify(nextState.order));
+    localStorage.setItem('order', JSON.stringify(nextState.order));
   }
 
-  addFish(fish) {
-    const fishes = {...this.state.fishes};
+  addPill(pill) {
+    const pills = {...this.state.pills};
     const timestamp = Date.now();
-    fishes[`fish-${timestamp}`]=fish;
-    this.setState({fishes});
+    pills[`pill-${timestamp}`]=pill;
+    this.setState({pills});
   }
 
-  updateFish(key, updateFish) {
-    const fishes = {...this.state.fishes};
-    fishes[key] = updateFish;
-    this.setState({fishes});
+  updatePill(key, updatePill) {
+    const pills = {...this.state.pills};
+    pills[key] = updatePill;
+    this.setState({pills});
   }
 
-  deleteFish(key) {
-    const fishes = {...this.state.fishes};
-    fishes[key] = null;
-    console.log('notdemo', fishes);
-    this.setState({fishes});
+  deletePill(key) {
+    debugger;
+    const pills = {...this.state.pills};
+    pills[key] = null;
+    this.setState({pills});
   }
 
   loadSamples() {
     this.setState({
-       fishes: sampleFishes,
+       pills: sampleFishes,
     })
   }
 
   addToOrder(key) {
     //take a copy of our state
     const order = { ...this.state.order};
+    const pills = { ...this.state.pills};
+    const pill = pills[key];
     // update or add the new number of fish ordered
     order[key] = order[key] + 1 || 1;
+
+    if (pill.piece <= 1) {
+      pill.piece = 0;
+      pill.status = "unavailable";
+    } else {
+      pill.piece -= 1;
+    }
+
     // update our state
     this.setState({
       order,
+      pills
     })
   }
 
   removeFromOrder(key) {
     const order = {...this.state.order};
-    delete order[key];
-    this.setState({order});
+    const pills = { ...this.state.pills};
+    const pill = pills[key];
+    if (order[key] <= 1) {
+      delete order[key];
+    } else {
+      order[key] -= 1;
+    }
+    pill.piece += 1;
+    pill.status = "available";
+    this.setState({order, pills});
   }
 
   render() {
-    const fishes = Object.keys(this.state.fishes);
+    const pills = Object.keys(this.state.pills);
     return (
       <div className="catch-of-the-day">
         <div className="menu">
-          <Header tagline="Fresh Seafood Market!" />
+          <Header tagline="Medicine database!" />
           <ul className="list-of-fishes">
             {
-              fishes
+              pills
                 .map((key) => {
                   return (
-                    <Fish
+                    <Pill
                       addToOrder={ this.addToOrder }
-                      details={this.state.fishes[key]}
+                      details={this.state.pills[key]}
                       index={ key }
                       key={ key }
                     />
@@ -111,26 +130,21 @@ class App extends React.Component {
           </ul>
         </div>
         <Order
-          fishes={ this.state.fishes }
+          pills={ this.state.pills }
           order={ this.state.order }
           params={ this.props.params}
-          removeFromOrder= {this.removeFromOrder}
+          removeFromOrder={this.removeFromOrder}
         />
         <Inventory
-          fishes={this.state.fishes}
-          addFish={ this.addFish }
+          pills={this.state.pills}
+          addPill={ this.addPill }
           loadSamples={ this.loadSamples }
-          updateFish={ this.updateFish }
-          deleteFish={ this.deleteFish }
-          storeId = {this.props.params.storeId }
+          updatePill={ this.updatePill }
+          deletePill={ this.deletePill }
         />
       </div>
     )
   }
-}
-
-App.propTypes = {
-  params: React.PropTypes.object.isRequired,
 }
 
 export default App;

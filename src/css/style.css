@@ -224,9 +224,9 @@ header.top h1 .ofThe {
       justify-content: center;
   -ms-flex-align: center;
       align-items: center;
-  background: url("images/anchor.svg") center no-repeat;
+  background: url("images/pharmacy.png") center no-repeat;
   background-size: cover;
-  padding: 0 1rem;
+  padding: 0 3rem;
 }
 header.top h1 .ofThe .of {
   padding-right: 2rem;
@@ -236,9 +236,10 @@ header.top h1 .ofThe .of {
 header.top h3 {
   margin: 0;
   font-size: 2rem;
-  color: #f5a623;
+  color: #009900;
   position: relative;
   display: inline-block;
+  padding: 10px 0;
 }
 header.top h3 span {
   background: #fff;
@@ -246,18 +247,6 @@ header.top h3 span {
   z-index: 2;
   padding-left: 1rem;
   padding-right: 1rem;
-}
-header.top h3:before,
-header.top h3:after {
-  display: block;
-  z-index: 1;
-  background: #000;
-  position: absolute;
-  width: 130%;
-  height: 1px;
-  content: '';
-  top: 5px;
-  margin-left: -15%;
 }
 header.top h3:after {
   top: auto;
@@ -289,10 +278,8 @@ header.top h3:after {
       flex-shrink: 1;
   -ms-flex-preferred-size: 50%;
       flex-basis: 50%;
-  transform: translateX(50%) rotateY(6deg) translateX(-50%);
 }
 .catch-of-the-day > *:nth-child(2) {
-  transform: translateX(-50%) rotateY(-14deg) translateX(50%);
   border-left: 0;
   border-right: 0;
   min-width: 300px;
@@ -302,29 +289,6 @@ header.top h3:after {
       flex-shrink: 1;
   -ms-flex-preferred-size: 50%;
       flex-basis: 50%;
-  transform: translateX(-50%) rotateY(10deg) translateX(50%) scale(1.08) translateX(24px);
-}
-input#fold:not(:checked) ~ #main .catch-of-the-day > * {
-  transform: none;
-}
-label[for="fold"] {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  text-transform: uppercase;
-  font-size: 1.3rem;
-  background: #000;
-  color: #fff;
-  border: 2px solid #000;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-}
-input#fold {
-  display: none;
-}
-input#fold:checked + label {
-  background: #fff;
-  color: #000;
 }
 ul {
   list-style: none;

@@ -8,17 +8,19 @@ class Order extends React.Component {
   }
 
   renderOrder(key) {
-    const fish = this.props.fishes[key];
+    const pill = this.props.pills[key];
     const count = this.props.order[key];
     const removeButton = <button onClick={() => this.props.removeFromOrder(key)}>&times;</button>
-    if (!fish || fish.status === 'unavailable') {
-      return <li key={ key }>Sorry, this { fish ? fish.name : 'fish'} is not available.
+
+    if (!pill || (pill.status === 'unavailable' && count <= 0)) {
+      debugger;
+      return <li key={ key }>Sorry, this { pill ? pill.name : 'pill'} is not available.
       {removeButton}</li>
     }
     return (
       <li key={key}>
-        <span>{ count }lbs {fish.name} {removeButton}</span>
-        <span className="price">{formatPrice(count * fish.price)}</span>
+        <span>{ count }buc {pill.name} {removeButton}</span>
+        <span className="price">{formatPrice(count * pill.price)}</span>
       </li>
     )
   }
@@ -28,11 +30,11 @@ class Order extends React.Component {
   render() {
     const orderIds = Object.keys(this.props.order);
     const total = orderIds.reduce((prevTotal, key) => {
-      const fish = this.props.fishes[key];
+      const pill = this.props.pills[key];
       const count = this.props.order[key];
-      const available = fish && fish.status === 'available';
+      const available = pill && (pill.status === 'available' || count > 0);
       if (available) {
-        return prevTotal + (fish.price * count || 0);
+        return prevTotal + (pill.price * count || 0);
       }
       return prevTotal;
     }, 0);

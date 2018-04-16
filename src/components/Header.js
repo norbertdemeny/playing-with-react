@@ -4,12 +4,12 @@ class Header extends React.Component {
   render() {
     return (
       <header className="top">
-        <h1>Catch
+        <h1>TNO
           <span className="ofThe">
-            <span className="of">of</span>
-            <span className="the">the</span>
+            <span className="of"></span>
+            <span className="the"></span>
           </span>
-        day</h1>
+        DB</h1>
         <h3 className="tagline">{this.props.tagline}</h3>
       </header>
     )
